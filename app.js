@@ -26,10 +26,13 @@ function formatTotal(value) {
 }
 
 function parsePortion(rawValue) {
-  const normalized = rawValue.trim().replace(",", ".");
-  if (!/^((0([.,]\d+)?)|1([.,]0+)?)$/.test(rawValue.trim())) return null;
+  const trimmed = rawValue.trim();
+  const normalized = trimmed.replace(",", ".");
+  const isFractionFromZeroToOne = /^((0([.,]\d+)?)|1([.,]0+)?)$/.test(trimmed);
+  const isWholeNumberFromTwoToTwelve = /^(?:[2-9]|1[0-2])$/.test(trimmed);
+  if (!isFractionFromZeroToOne && !isWholeNumberFromTwoToTwelve) return null;
   const value = Number(normalized);
-  return Number.isFinite(value) && value >= 0 && value <= 1 ? value : null;
+  return Number.isFinite(value) ? value : null;
 }
 
 function render() {
@@ -67,7 +70,7 @@ function render() {
     const input = document.createElement("input");
     input.className = "portion-input";
     input.inputMode = "decimal";
-    input.placeholder = "0,25 / 0.5 / 1";
+    input.placeholder = "0,25 / 1 / 12";
     input.setAttribute("aria-label", `Amount to add to ${meal.name}`);
     const addButton = document.createElement("button");
     addButton.type = "button";
@@ -118,7 +121,7 @@ mealList.addEventListener("click", (event) => {
   const error = card.querySelector(".portion-error");
   const portion = parsePortion(input.value);
   if (portion === null) {
-    error.textContent = "Enter a number from 0 to 1.";
+    error.textContent = "Enter 0–1, or a whole number up to 12.";
     input.focus();
     return;
   }

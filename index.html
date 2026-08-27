@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f7f4ed">
+  <title>Meal Counter</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="app">
+    <header>
+      <p class="eyebrow">MY DAILY TRACKER</p>
+      <h1>Meal Counter</h1>
+      <p class="intro">Create a meal, then add portions from 0 to 1 to its running total.</p>
+    </header>
+
+    <form id="meal-form" class="new-meal" novalidate>
+      <label for="meal-name">Meal name</label>
+      <div class="new-meal-row">
+        <input id="meal-name" name="meal-name" type="text" maxlength="60" placeholder="e.g. Breakfast" autocomplete="off" required>
+        <button type="submit">Add meal</button>
+      </div>
+      <p id="meal-error" class="error" role="alert"></p>
+    </form>
+
+    <section aria-labelledby="meals-title">
+      <div class="section-heading">
+        <h2 id="meals-title">Meals</h2>
+        <span id="meal-count" class="count">0 meals</span>
+      </div>
+      <div id="empty-state" class="empty-state">
+        <span aria-hidden="true">🍽️</span>
+        <p>No meals yet. Add your first one above.</p>
+      </div>
+      <div id="meal-list" class="meal-list"></div>
+    </section>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>
